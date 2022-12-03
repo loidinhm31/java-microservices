@@ -16,6 +16,10 @@ public abstract class BaseDto implements Serializable {
 
     private String updatedBy;
 
+    protected BaseDto() {
+
+    }
+
     public BaseDto(Date createdAt, String createdBy, Date updatedAt, String updatedBy) {
         this.createdAt = createdAt;
         this.createdBy = createdBy;

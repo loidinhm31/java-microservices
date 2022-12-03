@@ -1,7 +1,6 @@
 package com.example.webservice.service.impl;
 
 import com.example.webservice.dto.UserDto;
-import com.example.webservice.models.User;
 import com.example.webservice.service.UserService;
 import org.springframework.stereotype.Service;
 

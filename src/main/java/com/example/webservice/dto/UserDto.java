@@ -1,6 +1,5 @@
 package com.example.webservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -20,8 +19,11 @@ public class UserDto extends BaseDto {
     @JsonProperty("birth_date")
     private LocalDate birthDate;
 
+   public UserDto() {
 
-    public UserDto(Date createdAt, String createdBy, Date updatedAt, String updatedBy, Integer id, String name, LocalDate birthDate) {
+   }
+
+    public UserDto(Integer id, String name, LocalDate birthDate, Date createdAt, String createdBy, Date updatedAt, String updatedBy) {
         super(createdAt, createdBy, updatedAt, updatedBy);
         this.id = id;
         this.name = name;
