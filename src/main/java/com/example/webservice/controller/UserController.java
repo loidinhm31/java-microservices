@@ -1,13 +1,14 @@
 package com.example.webservice.controller;
 
+import com.example.webservice.dto.PostDto;
 import com.example.webservice.dto.UserDto;
-import com.example.webservice.models.User;
+import com.example.webservice.service.PostService;
 import com.example.webservice.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -15,32 +16,45 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final PostService postService;
 
-    public UserController(UserService userService) {
+    @Autowired
+    public UserController(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     @GetMapping
-    public List<UserDto> retrieveAllUsers() {
-        return userService.findAll();
+    public ResponseEntity<List<UserDto>> retrieveAllUsers() {
+        return ResponseEntity.ok(userService.getAll());
     }
 
     @GetMapping("/{id}")
-    public UserDto retrieveUser(@PathVariable int id) {
-        UserDto userDto = userService.findOne(id);
-
-        return userDto;
+    public ResponseEntity<UserDto> retrieveUser(@PathVariable long id) {
+        UserDto userDto = userService.getOneById(id);
+        return ResponseEntity.ok(userDto);
     }
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         UserDto savedUser = userService.save(userDto);
-
         return ResponseEntity.ok(savedUser);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable int id) {
+    public void deleteUser(@PathVariable long id) {
         userService.deleteById(id);
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<PostDto>> retrievePostsForUser(@PathVariable long id) {
+        List<PostDto> postDtoList = postService.getAllByUserId(id);
+        return ResponseEntity.ok(postDtoList);
+    }
+
+    @PostMapping("/{id}/posts")
+    public ResponseEntity<PostDto> createPostForUser(@PathVariable long id, @RequestBody PostDto postDto) {
+        PostDto result = postService.save(id, postDto);
+        return ResponseEntity.ok(result);
     }
 }

@@ -5,10 +5,9 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class UserDto extends BaseDto {
-    private Integer id;
+    private Long id;
 
     @Size(min = 2)
     @JsonProperty("username")
@@ -23,18 +22,18 @@ public class UserDto extends BaseDto {
 
    }
 
-    public UserDto(Integer id, String name, LocalDate birthDate, Date createdAt, String createdBy, Date updatedAt, String updatedBy) {
-        super(createdAt, createdBy, updatedAt, updatedBy);
+    public UserDto(Long id, String name, LocalDate birthDate) {
+        super();
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

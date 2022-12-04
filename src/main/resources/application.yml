@@ -1,9 +1,36 @@
+server:
+  servlet:
+    context-path: /api
+  port: 9090
+  error:
+    include-message: always
+
+spring:
+  profiles:
+    active: local
+    # Spring JDBC Properties
+  datasource:
+    url: jdbc:h2:mem:testdb
+#    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=webservice
+#    username: postgres
+#    password: postgrespw
+
+  # Flyway config
+  flyway:
+    #    enabled: false
+    schemas:
+    outOfOrder: true
+    baseline-version: 0
+    baselineOnMigrate: true
+    table: schema_history
+
 logging:
   level:
     org:
       springframework: info
-
-# swagger-ui custom path
+# Swagger-ui custom path
   springdoc:
     swagger-ui:
       path: /swagger-ui.html
+
+
