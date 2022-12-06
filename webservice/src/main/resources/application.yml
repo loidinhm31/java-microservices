@@ -6,6 +6,8 @@ server:
     include-message: always
 
 spring:
+  application:
+    name: handler-service
   profiles:
     active: local
     # Spring JDBC Properties
@@ -27,10 +29,18 @@ spring:
 logging:
   level:
     org:
-      springframework: info
+      springframework:
+        web: DEBUG
+      hibernate: INFO
+    com.sysmex.bcqmun: DEBUG
+
 # Swagger-ui custom path
   springdoc:
     swagger-ui:
       path: /swagger-ui.html
 
-
+# Eureka Client
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
