@@ -1,4 +1,4 @@
-package com.flo.authenticationservice;
+package com.flo.authenticationservice.security.jwt;
 
 public class AuthenticationRequest {
     private String username;

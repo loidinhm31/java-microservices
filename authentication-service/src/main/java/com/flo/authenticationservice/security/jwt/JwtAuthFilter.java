@@ -1,4 +1,4 @@
-package com.flo.authenticationservice.jwt;
+package com.flo.authenticationservice.security.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

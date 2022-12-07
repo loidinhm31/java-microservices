@@ -1,9 +1,8 @@
-package com.flo.authenticationservice.jwt;
+package com.flo.authenticationservice.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +15,12 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtils {
-    private final String jwtSigningKey = "verysecretkey";
+
+    private final JwtConfig jwtConfig;
+
+    public JwtUtils(JwtConfig jwtConfig) {
+        this.jwtConfig = jwtConfig;
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -37,7 +41,7 @@ public class JwtUtils {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(jwtSigningKey).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(jwtConfig.getSecretKey()).parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {
@@ -58,8 +62,8 @@ public class JwtUtils {
                 .setSubject(userDetails.getUsername())
                 .claim("authorities", userDetails.getAuthorities())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(24))) // expire in 24h
-                .signWith(SignatureAlgorithm.HS256, jwtSigningKey).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(jwtConfig.getTokenExpirationAfterDays())))
+                .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecretKey()).compact();
     }
 
     public Boolean isTokenValid(String token, UserDetails userDetails) {

@@ -1,6 +1,6 @@
 package com.flo.authenticationservice.security;
 
-import com.flo.authenticationservice.jwt.JwtAuthFilter;
+import com.flo.authenticationservice.security.jwt.JwtAuthFilter;
 import com.flo.authenticationservice.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
