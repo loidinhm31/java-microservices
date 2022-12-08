@@ -19,6 +19,14 @@ spring:
   jpa:
     show-sql: true
 
+  security:
+    oauth2:
+      resource-server:
+        opaque:
+          introspection-uri: http://localhost:8080/auth/realms/flo-dev/protocol/openid-connect/token/introspect
+          introspection-client-id: FLO_API_SECRET
+          introspection-client-secret: MZbCElIp4JOIsGI6DVwbIbCs9HchORnd
+
   # Flyway config
   flyway:
     #    enabled: false
@@ -40,9 +48,3 @@ eureka:
   client:
     service-url:
       default-zone: http://localhost:8761/eureka
-
-application:
-  jwt:
-    secretKey: "testsecurityfromnowabctestsecurityfromnowabc"
-    tokenPrefix: "Bearer "
-    tokenExpirationAfterDays: 1
