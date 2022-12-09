@@ -1,7 +1,7 @@
-CREATE SCHEMA IF NOT EXISTS authentication;
+CREATE SCHEMA IF NOT EXISTS fsa;
 
 SET
-search_path TO authentication;
+search_path TO fsa;
 
 CREATE TABLE users
 (

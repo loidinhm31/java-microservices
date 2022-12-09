@@ -13,7 +13,7 @@ spring:
     # Spring JDBC Properties
   datasource:
     #    url: jdbc:h2:mem:testdb
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=authentication
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=fsa
     username: postgres
     password: postgrespw
   jpa:
@@ -30,7 +30,7 @@ spring:
   # Flyway config
   flyway:
     #    enabled: false
-    schemas: authentication
+    schemas: fsa
     outOfOrder: true
     baseline-version: 0
     baselineOnMigrate: true
