@@ -5,11 +5,12 @@ spring:
     config:
       enabled: false
 
-
 server:
-  port: 8761
+  port: 8082
 
 eureka:
+  instance:
+    hostname: localhost
   client:
     register-with-eureka: false
     fetch-registry: false

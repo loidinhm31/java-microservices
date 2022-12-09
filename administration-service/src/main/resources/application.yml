@@ -1,7 +1,7 @@
 server:
   servlet:
     context-path: /api
-  port: 9090
+  port: 9091
   error:
     include-message: always
 
@@ -47,4 +47,6 @@ logging:
 eureka:
   client:
     service-url:
-      default-zone: http://localhost:8761/eureka
+      defaultZone: ${EUREKA_URI:http://localhost:8082/eureka}
+  instance:
+    preferIpAddress: true
