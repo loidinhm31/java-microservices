@@ -1,5 +1,7 @@
 package com.flo.webservice.exception;
 
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -17,7 +19,7 @@ import java.util.Objects;
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex, WebRequest request) throws Exception {
+    public final ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex, WebRequest request) {
         ErrorResponse errorDetails = new ErrorResponse(LocalDateTime.now(),
                 ex.getMessage(), request.getDescription(false));
 
@@ -26,12 +28,36 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
 
     @ExceptionHandler(ObjectNotFoundException.class)
-    public final ResponseEntity<ErrorResponse> handleObjectNotFoundException(Exception ex, WebRequest request) throws Exception {
+    public final ResponseEntity<ErrorResponse> handleObjectNotFoundException(Exception ex, WebRequest request) {
         ErrorResponse errorDetails = new ErrorResponse(LocalDateTime.now(),
                 ex.getMessage(), request.getDescription(false));
 
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
 
+    }
+
+    @ExceptionHandler(CallNotPermittedException.class)
+    public final ResponseEntity<ErrorResponse> handleCallNotPermittedException(Exception ex, WebRequest request) {
+        ErrorResponse errorDetails = new ErrorResponse(LocalDateTime.now(),
+                ex.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+//    @ExceptionHandler(BulkheadFullException.class)
+//    public final ResponseEntity<ErrorResponse> handleBulkheadFullException(Exception ex, WebRequest request) {
+//        ErrorResponse errorDetails = new ErrorResponse(LocalDateTime.now(),
+//                ex.getMessage(), request.getDescription(false));
+//
+//        return new ResponseEntity<>(errorDetails, HttpStatus.BANDWIDTH_LIMIT_EXCEEDED);
+//    }
+
+    @ExceptionHandler(RequestNotPermitted.class)
+    public final ResponseEntity<ErrorResponse> handleRequestNotPermitted(Exception ex, WebRequest request) {
+        ErrorResponse errorDetails = new ErrorResponse(LocalDateTime.now(),
+                ex.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.TOO_MANY_REQUESTS);
     }
 
     @Override

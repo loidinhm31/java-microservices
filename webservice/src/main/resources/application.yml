@@ -30,9 +30,8 @@ logging:
   level:
     org:
       springframework:
-        web: DEBUG
-      hibernate: INFO
-    com.sysmex.bcqmun: DEBUG
+#        web: DEBUG
+#      hibernate: INFO
 
 # Swagger-ui custom path
   springdoc:
@@ -44,3 +43,45 @@ eureka:
   client:
     service-url:
       default-zone: http://localhost:8761/eureka
+
+# Resilience4j
+resilience4j:
+  circuitbreaker:
+    instances:
+      circuitBreakerApi:
+        failure-rate-threshold: 50 # allow 50% of failed calls to the service in the closed state, after which it'll open the circuit and start rejecting requests
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10
+        sliding-window-type: count_based
+  retry:
+    instances:
+      retryApi:
+        max-attempts: 5
+        wait-duration: 2s
+        enable-exponential-backoff: true
+    metrics:
+      legacy:
+        enabled: true
+      enabled: true
+  bulkhead:
+    metrics:
+      enabled: true
+    instances:
+      bulkheadApi:
+        max-concurrent-calls: 0
+        max-wait-duration: 1
+  ratelimiter:
+    metrics:
+      enabled: true
+    instances:
+      rateLimiterApi:
+        register-health-indicator: true
+        limit-for-period: 5 # 5 req/min without waiting
+        limit-refresh-period: 60s
+        timeout-duration: 0s
+        allow-health-indicator-to-fail: true
+        subscribe-for-events: true
+        event-consumer-buffer-size: 50
