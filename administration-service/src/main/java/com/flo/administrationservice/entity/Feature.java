@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Feature extends BaseEntity<String> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "feature_id", unique = true, nullable = false)
     private UUID featureId;
 

@@ -13,7 +13,7 @@ import java.util.List;
 public class Role extends BaseEntity<String> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "role_id")
     private Long roleId;
 

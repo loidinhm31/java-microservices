@@ -10,7 +10,7 @@ import java.util.Date;
 public class TrackingLastLogin extends BaseEntity<String> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "tracking_last_login_id", unique = true, nullable = false)
     private Long id;
 
