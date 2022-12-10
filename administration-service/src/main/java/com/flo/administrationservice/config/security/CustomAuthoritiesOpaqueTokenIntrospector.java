@@ -1,6 +1,8 @@
 package com.flo.administrationservice.config.security;
 
 import com.flo.administrationservice.service.UserInfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
+    private final Logger LOG = LoggerFactory.getLogger(CustomAuthoritiesOpaqueTokenIntrospector.class);
 
     private final UserInfoService userInfoService;
 
@@ -52,10 +55,10 @@ public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntr
         if (principal.getAttributes().containsKey("preferred_username")) {
             String userSso = principal.getAttributes().get("preferred_username").toString();
 
-            // TODO Double-check
+            // Double-check to verify user from OIDC was added in the native database
             UserDetails user = userInfoService.loadUserBySso(userSso);
 
-            // TODO comment
+            // Get priority  authorities from the native database
             if (CollectionUtils.isEmpty(user.getAuthorities())) {
                 grantedAuthorities = scopes.stream()
                         .map(SimpleGrantedAuthority::new)
@@ -63,10 +66,8 @@ public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntr
             } else {
                 grantedAuthorities = user.getAuthorities();
             }
-
-            System.out.printf("sso: %s\n", user.getUsername());
-            System.out.printf("authorities: %s\n", grantedAuthorities);
-
+            LOG.info(String.format("sso: %s\n", user.getUsername()));
+            LOG.info(String.format("authorities: %s\n", grantedAuthorities));
         }
         return (Collection<GrantedAuthority>) grantedAuthorities;
     }
