@@ -6,8 +6,9 @@ search_path TO fsa;
 CREATE TABLE users
 (
     user_id    SERIAL    NOT NULL PRIMARY KEY NOT NULL,
-    username   TEXT      NOT NULL,
-    password   TEXT,
+    sso        TEXT      NOT NULL,
+    username   TEXT,
+    email      TEXT,
     created_at TIMESTAMP NOT NULL,
     created_by TEXT      NOT NULL,
     updated_at TIMESTAMP NOT NULL,
@@ -59,8 +60,6 @@ CREATE TABLE role_feature
     updated_by TEXT               NOT NULL
 );
 
-
-
 CREATE TABLE tracking_last_login
 (
     tracking_last_login_id SERIAL PRIMARY KEY                NOT NULL,
@@ -72,7 +71,7 @@ CREATE TABLE tracking_last_login
     updated_at             TIMESTAMP                         NOT NULL,
     updated_by             TEXT                              NOT NULL
 );
-create index if not exists tracking_last_login_user_id_index on TRACKING_LAST_LOGIN (user_id);
+CREATE INDEX IF NOT EXISTS tracking_last_login_user_id_index ON TRACKING_LAST_LOGIN (user_id);
 
 
 ALTER TABLE user_role
@@ -87,9 +86,8 @@ ALTER TABLE role_feature
 ALTER TABLE role_feature
     ADD FOREIGN KEY (feature_id) REFERENCES features (feature_id);
 
-INSERT INTO users(username, password, created_at, created_by, updated_at, updated_by)
-VALUES ('admin', '$2a$12$hSMyasJ7qheNIrFsTi1EpuOgY4hfz9vQvtd45TN1uMbY4HlpD3Zf.', CURRENT_TIMESTAMP, 'admin',
-        CURRENT_TIMESTAMP, 'admin');
+INSERT INTO users(sso, username, email, created_at, created_by, updated_at, updated_by)
+VALUES ('100000001', 'Example', 'here@example.com', CURRENT_TIMESTAMP, 'admin', CURRENT_TIMESTAMP, 'admin');
 
 INSERT INTO roles(role_name, role_code, created_at, created_by, updated_at, updated_by)
 VALUES ('Global Admin', 'GLOBAL_ADMIN', CURRENT_TIMESTAMP, 'admin', CURRENT_TIMESTAMP, 'admin');
