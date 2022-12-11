@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class RoleFeature extends BaseEntity<String> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
@@ -20,4 +20,31 @@ public class RoleFeature extends BaseEntity<String> {
     @JoinColumn(name = "feature_id", nullable = false)
     private Feature feature;
 
+    public RoleFeature() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Feature getFeature() {
+        return feature;
+    }
+
+    public void setFeature(Feature feature) {
+        this.feature = feature;
+    }
 }

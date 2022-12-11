@@ -1,11 +1,11 @@
 package com.flo.administrationservice.service.impl;
 
+import com.flo.administrationservice.config.security.CustomUser;
 import com.flo.administrationservice.entity.Feature;
 import com.flo.administrationservice.entity.RoleFeature;
 import com.flo.administrationservice.entity.User;
 import com.flo.administrationservice.entity.UserRole;
 import com.flo.administrationservice.repository.UserRepository;
-import com.flo.administrationservice.config.security.CustomUser;
 import com.flo.administrationservice.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

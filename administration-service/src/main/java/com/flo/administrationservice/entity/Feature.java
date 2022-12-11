@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Feature extends BaseEntity<String> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feature_id", unique = true, nullable = false)
     private UUID featureId;
 
@@ -25,4 +25,39 @@ public class Feature extends BaseEntity<String> {
     @OneToMany(mappedBy = "feature", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RoleFeature> roleFeatures = new ArrayList<>();
 
+    public Feature() {
+
+    }
+
+    public UUID getFeatureId() {
+        return featureId;
+    }
+
+    public void setFeatureId(UUID featureId) {
+        this.featureId = featureId;
+    }
+
+    public String getFeatureCode() {
+        return featureCode;
+    }
+
+    public void setFeatureCode(String featureCode) {
+        this.featureCode = featureCode;
+    }
+
+    public String getFeatureName() {
+        return featureName;
+    }
+
+    public void setFeatureName(String featureName) {
+        this.featureName = featureName;
+    }
+
+    public List<RoleFeature> getRoleFeatures() {
+        return roleFeatures;
+    }
+
+    public void setRoleFeatures(List<RoleFeature> roleFeatures) {
+        this.roleFeatures = roleFeatures;
+    }
 }

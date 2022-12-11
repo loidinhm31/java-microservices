@@ -11,20 +11,24 @@ import java.util.List;
 public class User extends BaseEntity<String> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
+
+    @Column(name = "sso", nullable = false)
+    private String sso;
 
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password", nullable = false)
-    private String userPassword;
+    @Column(name = "email")
+    private String email;
+
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TrackingLastLogin> trackingLastLogins = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<UserRole> userRoles = new ArrayList<>();
 
     public User() {
@@ -39,6 +43,14 @@ public class User extends BaseEntity<String> {
         this.userId = userId;
     }
 
+    public String getSso() {
+        return sso;
+    }
+
+    public void setSso(String username) {
+        this.sso = username;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -47,12 +59,12 @@ public class User extends BaseEntity<String> {
         this.username = username;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<TrackingLastLogin> getTrackingLastLogins() {
