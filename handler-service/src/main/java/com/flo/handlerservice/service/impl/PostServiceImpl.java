@@ -1,60 +1,54 @@
 package com.flo.handlerservice.service.impl;
 
-import com.flo.handlerservice.dto.PostDto;
 import com.flo.handlerservice.entity.Post;
-import com.flo.handlerservice.entity.User;
-import com.flo.handlerservice.exception.ObjectNotFoundException;
+import com.flo.handlerservice.model.PostRequest;
 import com.flo.handlerservice.repository.PostRepository;
-import com.flo.handlerservice.repository.UserRepository;
 import com.flo.handlerservice.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements PostService {
-    private final UserRepository userRepository;
     private final PostRepository postRepository;
 
     @Autowired
-    public PostServiceImpl(UserRepository userRepository, PostRepository postRepository) {
-        this.userRepository = userRepository;
+    public PostServiceImpl(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
 
     @Override
-    public List<PostDto> getAllByUserId(long userId) {
+    public List<PostRequest> getAllByUserId(long userId) {
         List<Post> posts = postRepository.findAllByUserId(userId);
 
-        List<PostDto> postDtoList = posts.stream().map(post -> {
-            PostDto postDto = new PostDto();
-            postDto.setId(post.getId());
-            postDto.setDescription(post.getDescription());
-            return postDto;
+        List<PostRequest> postRequestList = posts.stream().map(post -> {
+            PostRequest postRequest = new PostRequest();
+            postRequest.setId(post.getId());
+            postRequest.setDescription(post.getDescription());
+            return postRequest;
         }).toList();
-        return postDtoList;
+        return postRequestList;
     }
 
     @Override
-    public PostDto save(long userId, PostDto postDto) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty())
-            throw new ObjectNotFoundException(String.format("cannot find user id: %s", userId));
+    public PostRequest save(long userId, PostRequest postRequest) {
+//        Optional<User> user = userRepository.findById(userId);
+//        if (user.isEmpty())
+//            throw new ObjectNotFoundException(String.format("cannot find user id: %s", userId));
 
         Post post = new Post();
-        post.setDescription(postDto.getDescription());
-        post.setUser(user.get());
+        post.setDescription(postRequest.getDescription());
+//        post.setUserSso(null);
         post.setCreatedBy(String.valueOf(userId));
         post.setUpdatedBy(String.valueOf(userId));
 
         Post savedPost = postRepository.save(post);
-        PostDto resultPost = new PostDto();
+        PostRequest resultPost = new PostRequest();
         resultPost.setId(savedPost.getId());
         resultPost.setDescription(savedPost.getDescription());
-        resultPost.setUserId(savedPost.getUser().getId());
+//        resultPost.setUserId(savedPost.getUser().getId());
         return resultPost;
     }
 }

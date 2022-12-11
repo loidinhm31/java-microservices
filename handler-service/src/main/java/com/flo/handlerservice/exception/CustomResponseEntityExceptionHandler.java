@@ -1,5 +1,6 @@
 package com.flo.handlerservice.exception;
 
+import feign.FeignException;
 import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +25,6 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                 ex.getMessage(), request.getDescription(false));
 
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-
     }
 
     @ExceptionHandler(ObjectNotFoundException.class)
@@ -33,7 +33,14 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                 ex.getMessage(), request.getDescription(false));
 
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(FeignException.FeignClientException.class)
+    public final ResponseEntity<ErrorResponse> handleFeignClientException(Exception ex, WebRequest request) {
+        ErrorResponse errorDetails = new ErrorResponse(LocalDateTime.now(),
+                ex.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(CallNotPermittedException.class)

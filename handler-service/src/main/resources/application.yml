@@ -25,6 +25,13 @@ spring:
     baseline-version: 0
     baselineOnMigrate: true
     table: schema_history
+  security:
+    oauth2:
+      resource-server:
+        opaque:
+          introspection-uri: http://localhost:8080/auth/realms/flo-dev/protocol/openid-connect/token/introspect
+          introspection-client-id: FLO_API_SECRET
+          introspection-client-secret: lmQ7Q9xiAGvtvRwc0pRckNZ2urLCbH6N
 
 logging:
   level:

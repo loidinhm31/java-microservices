@@ -1,58 +1,47 @@
 package com.flo.handlerservice.service.impl;
 
 import com.flo.handlerservice.dto.UserDto;
-import com.flo.handlerservice.entity.User;
 import com.flo.handlerservice.exception.ObjectNotFoundException;
-import com.flo.handlerservice.repository.UserRepository;
+import com.flo.handlerservice.feign.client.AdministrationClient;
+import com.flo.handlerservice.record.UserResponse;
 import com.flo.handlerservice.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import feign.FeignException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
+    private final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private final AdministrationClient administrationClient;
+
+    public UserServiceImpl(AdministrationClient administrationClient) {
+        this.administrationClient = administrationClient;
     }
 
     @Override
     public List<UserDto> getAll() {
-        List<User> users = userRepository.findAll();
-
-        List<UserDto> userDtoList = users.stream().map(user -> {
-            UserDto userDto = new UserDto();
-            userDto.setId(user.getId());
-            userDto.setName(user.getName());
-            return userDto;
-        }).collect(Collectors.toList());
-
-        return userDtoList;
+        return null;
     }
 
     @Override
-    public UserDto getOneById(long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isEmpty())
-            throw new ObjectNotFoundException(String.format("cannot find user id: %s", id));
+    public UserResponse getOneBySso(String userSso) {
+        try {
+            ResponseEntity<UserResponse> userResponseResponseEntity = administrationClient.getUserInfo(userSso);
+            return userResponseResponseEntity.getBody();
 
-        User user = optionalUser.get();
-
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-
-        return userDto;
+        } catch (FeignException.FeignClientException e) {
+            LOG.error("User error: ", e);
+            throw new ObjectNotFoundException(String.format("cannot not find user with sso: %s", userSso));
+        }
     }
 
     @Override
     public void deleteById(long id) {
-        userRepository.deleteById(id);
     }
 
     @Override

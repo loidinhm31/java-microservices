@@ -1,7 +1,8 @@
 package com.flo.handlerservice.controller;
 
-import com.flo.handlerservice.dto.PostDto;
 import com.flo.handlerservice.dto.UserDto;
+import com.flo.handlerservice.model.PostRequest;
+import com.flo.handlerservice.record.UserResponse;
 import com.flo.handlerservice.service.PostService;
 import com.flo.handlerservice.service.UserService;
 import jakarta.validation.Valid;
@@ -29,9 +30,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> retrieveUser(@PathVariable long id) {
-        UserDto userDto = userService.getOneById(id);
+    @GetMapping("/{sso}")
+    public ResponseEntity<UserResponse> retrieveUser(@PathVariable String sso) {
+        UserResponse userDto = userService.getOneBySso(sso);
         return ResponseEntity.ok(userDto);
     }
 
@@ -47,14 +48,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}/posts")
-    public ResponseEntity<List<PostDto>> retrievePostsForUser(@PathVariable long id) {
-        List<PostDto> postDtoList = postService.getAllByUserId(id);
-        return ResponseEntity.ok(postDtoList);
+    public ResponseEntity<List<PostRequest>> retrievePostsForUser(@PathVariable long id) {
+        List<PostRequest> postRequestList = postService.getAllByUserId(id);
+        return ResponseEntity.ok(postRequestList);
     }
 
     @PostMapping("/{id}/posts")
-    public ResponseEntity<PostDto> createPostForUser(@PathVariable long id, @RequestBody PostDto postDto) {
-        PostDto result = postService.save(id, postDto);
+    public ResponseEntity<PostRequest> createPostForUser(@PathVariable long id, @RequestBody PostRequest postRequest) {
+        PostRequest result = postService.save(id, postRequest);
         return ResponseEntity.ok(result);
     }
 }

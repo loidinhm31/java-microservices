@@ -1,11 +1,11 @@
 package com.flo.handlerservice.service;
 
-import com.flo.handlerservice.dto.PostDto;
+import com.flo.handlerservice.model.PostRequest;
 
 import java.util.List;
 
 public interface PostService {
-    List<PostDto> getAllByUserId(long userId);
+    List<PostRequest> getAllByUserId(long userId);
 
-    PostDto save(long userId, PostDto postDto);
+    PostRequest save(long userId, PostRequest postRequest);
 }

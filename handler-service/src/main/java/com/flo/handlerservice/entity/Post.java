@@ -1,6 +1,9 @@
 package com.flo.handlerservice.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "posts")
@@ -11,8 +14,7 @@ public class Post extends BaseEntity<String> {
 
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private String userSso;
 
     public Post() {
 
@@ -34,11 +36,11 @@ public class Post extends BaseEntity<String> {
         this.description = description;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserSso() {
+        return userSso;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserSso(String userSso) {
+        this.userSso = userSso;
     }
 }

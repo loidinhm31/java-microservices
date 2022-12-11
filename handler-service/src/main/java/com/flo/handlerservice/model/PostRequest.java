@@ -1,11 +1,11 @@
-package com.flo.handlerservice.dto;
+package com.flo.handlerservice.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PostDto {
+public class PostRequest {
     private long id;
 
     private String description;
@@ -13,10 +13,9 @@ public class PostDto {
     @JsonProperty("user_id")
     private long userId;
 
-    public PostDto() {
+    public PostRequest() {
 
     }
-
 
     public long getId() {
         return id;

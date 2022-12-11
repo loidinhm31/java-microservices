@@ -1,55 +1,60 @@
 package com.flo.handlerservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.time.LocalDate;
+public class UserDto {
+    private Long userId;
 
-public class UserDto extends BaseDto {
-    private Long id;
+    private String sso;
 
-    @Size(min = 2)
-    @JsonProperty("username")
-    private String name;
+    private String username;
 
+    private String email;
 
-    @Past(message = "birthdate should be in the past")
-    @JsonProperty("birth_date")
-    private LocalDate birthDate;
+    private List<UserRoleDto> userRoles = new ArrayList<>();
 
-   public UserDto() {
+    public UserDto() {
 
-   }
-
-    public UserDto(Long id, String name, LocalDate birthDate) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getSso() {
+        return sso;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSso(String sso) {
+        this.sso = sso;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
+    public String getUsername() {
+        return username;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<UserRoleDto> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRoleDto> userRoles) {
+        this.userRoles = userRoles;
     }
 }
