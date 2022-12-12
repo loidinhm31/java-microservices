@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: eureka-discovery-server
+  cloud:
+    config:
+      enabled: false
+
+server:
+  port: 8082
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false

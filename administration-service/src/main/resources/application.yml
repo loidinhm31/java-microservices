@@ -1,0 +1,52 @@
+server:
+  servlet:
+    context-path: /api
+  port: 9091
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: authentication-service
+  profiles:
+    active: local
+    # Spring JDBC Properties
+  datasource:
+    #    url: jdbc:h2:mem:testdb
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=fsa
+    username: postgres
+    password: postgrespw
+  jpa:
+    show-sql: true
+
+  security:
+    oauth2:
+      resource-server:
+        opaque:
+          introspection-uri: http://localhost:8080/auth/realms/flo-dev/protocol/openid-connect/token/introspect
+          introspection-client-id: FLO_API_SECRET
+          introspection-client-secret: MZbCElIp4JOIsGI6DVwbIbCs9HchORnd
+
+  # Flyway config
+  flyway:
+    #    enabled: false
+    schemas: fsa
+    outOfOrder: true
+    baseline-version: 0
+    baselineOnMigrate: true
+    table: schema_history
+
+logging:
+  level:
+    org:
+      springframework:
+  #        web: DEBUG
+#        hibernate: INFO
+
+# Eureka Client
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8082/eureka}
+  instance:
+    preferIpAddress: true
