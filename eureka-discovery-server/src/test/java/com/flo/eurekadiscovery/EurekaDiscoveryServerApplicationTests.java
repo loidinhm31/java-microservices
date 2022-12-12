@@ -1,10 +1,10 @@
-package com.flo.cloudconfigserver;
+package com.flo.eurekadiscovery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CloudConfigServerApplicationTests {
+class EurekaDiscoveryServerApplicationTests {
 
 	@Test
 	void contextLoads() {
