@@ -240,9 +240,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <!-- <scope>test</scope> -->
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -285,30 +285,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-                <version>${git-commit-id-plugin.version}</version>
-
-                <executions>
-                    <execution>
-                        <id>git-commit-id-on-validate-revision</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>revision</goal>
-                        </goals>
-                    </execution>
-                </executions>
-
-                <configuration>
-                    <skipPoms>false</skipPoms>
-                    <useNativeGit>true</useNativeGit>
-                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <!-- enables other plugins to use git properties -->
-                    <injectAllReactorProjects>true</injectAllReactorProjects>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.hibernate.orm.tooling</groupId>
                 <artifactId>hibernate-enhance-maven-plugin</artifactId>
