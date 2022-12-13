@@ -30,7 +30,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserDetails loadUserBySso(String userSso) throws UsernameNotFoundException {
-         User user = userRepository.findBySsoIgnoreCase(userSso);
+        User user = userRepository.findBySsoIgnoreCase(userSso);
 
         if (user == null) {
             throw new UsernameNotFoundException(userSso);

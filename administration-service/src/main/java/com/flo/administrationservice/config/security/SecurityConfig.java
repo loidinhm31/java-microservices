@@ -14,17 +14,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${spring.security.oauth2.resourceserver.opaque.introspection-uri}")
+    @Value("${spring.security.oauth2.resourceserver.opaque-token.introspection-uri}")
     String introspectionUri;
 
-    @Value("${spring.security.oauth2.resourceserver.opaque.introspection-client-id}")
+    @Value("${spring.security.oauth2.resourceserver.opaque-token.client-id}")
     String clientId;
 
-    @Value("${spring.security.oauth2.resourceserver.opaque.introspection-client-secret}")
+    @Value("${spring.security.oauth2.resourceserver.opaque-token.client-secret}")
     String clientSecret;
 
     private final UserInfoService userInfoService;
@@ -68,10 +72,10 @@ public class SecurityConfig {
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .opaqueToken(opaqueToken -> opaqueToken
                                 .introspector(introspector())))
-                .authorizeHttpRequests()
-                .and()
-                // Basic Auth
-                .httpBasic()
+//                .authorizeHttpRequests()
+//                .and()
+//                // Basic Auth
+//                .httpBasic()
         ;
         return http.build();
     }
@@ -79,7 +83,17 @@ public class SecurityConfig {
     @Bean
     public OpaqueTokenIntrospector introspector() {
         CustomAuthoritiesOpaqueTokenIntrospector customAuthoritiesOpaqueTokenIntrospector = new CustomAuthoritiesOpaqueTokenIntrospector(userInfoService);
-        customAuthoritiesOpaqueTokenIntrospector.setDelegate(introspectionUri, clientId, clientSecret);
+        try {
+            customAuthoritiesOpaqueTokenIntrospector.setDelegate(introspectionUri, clientId, clientSecret);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (KeyStoreException e) {
+            throw new RuntimeException(e);
+        } catch (KeyManagementException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("here11");
+
         return customAuthoritiesOpaqueTokenIntrospector;
     }
 

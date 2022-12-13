@@ -1,0 +1,33 @@
+spring:
+    # Spring JDBC Properties
+  datasource:
+    url: jdbc:postgresql://postgres:5432/postgres?currentSchema=fsa
+    username: postgres
+    password: postgrespw
+  jpa:
+    show-sql: true
+
+  security:
+    oauth2:
+      resource-server:
+        opaque-token:
+          introspection-uri: http://keycloak-authorization-server:8081/auth/realms/flo-dev/protocol/openid-connect/token/introspect
+          client-id: FLO_API_SECRET
+          client-secret: ofBYMfWcT48VYenq8kh0jzdYegxxSPAZ
+
+  # Flyway config
+  flyway:
+    #    enabled: false
+    schemas: fsa
+    outOfOrder: true
+    baseline-version: 0
+    baselineOnMigrate: true
+    table: schema_history
+
+# Eureka Client
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8082/eureka}
+  instance:
+    preferIpAddress: true
