@@ -72,10 +72,10 @@ public class SecurityConfig {
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .opaqueToken(opaqueToken -> opaqueToken
                                 .introspector(introspector())))
-//                .authorizeHttpRequests()
-//                .and()
-//                // Basic Auth
-//                .httpBasic()
+                .authorizeHttpRequests()
+                .and()
+                // Basic Auth
+                .httpBasic()
         ;
         return http.build();
     }

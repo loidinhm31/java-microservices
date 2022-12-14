@@ -14,10 +14,11 @@ services:
     restart: unless-stopped
   rabbitmq:
     container_name: rabbitmq
-    image: "3.11-alpine"
+    image: "rabbitmq:3.11-alpine"
     ports:
       - "5672:5672"
       - "15672:15672"
+    restart: unless-stopped
 
   eureka-discovery-server:
     build:
@@ -26,10 +27,11 @@ services:
     restart: always
     ports:
       - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
     deploy:
       mode: replicated
       replicas: 1
-
 
   api-gateway-server:
     build:
@@ -38,13 +40,11 @@ services:
     restart: always
     ports:
       - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
     deploy:
       mode: replicated
       replicas: 1
-    networks:
-      - spring
-    depends_on:
-      - eureka-discovery-server
 
   keycloak-authorization-server:
     build:
