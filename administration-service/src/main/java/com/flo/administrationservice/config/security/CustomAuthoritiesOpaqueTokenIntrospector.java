@@ -36,7 +36,7 @@ public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntr
         this.userInfoService = userInfoService;
     }
 
-    public void setDelegate(String introspectionUri, String clientId, String clientSecret) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+    public void setDelegate(String introspectionUri, String clientId, String clientSecret) {
         this.delegate = new NimbusOpaqueTokenIntrospector(introspectionUri, clientId, clientSecret);
     }
 

@@ -83,16 +83,7 @@ public class SecurityConfig {
     @Bean
     public OpaqueTokenIntrospector introspector() {
         CustomAuthoritiesOpaqueTokenIntrospector customAuthoritiesOpaqueTokenIntrospector = new CustomAuthoritiesOpaqueTokenIntrospector(userInfoService);
-        try {
-            customAuthoritiesOpaqueTokenIntrospector.setDelegate(introspectionUri, clientId, clientSecret);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (KeyStoreException e) {
-            throw new RuntimeException(e);
-        } catch (KeyManagementException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("here11");
+        customAuthoritiesOpaqueTokenIntrospector.setDelegate(introspectionUri, clientId, clientSecret);
 
         return customAuthoritiesOpaqueTokenIntrospector;
     }
