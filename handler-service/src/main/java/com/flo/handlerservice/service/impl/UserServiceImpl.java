@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final AdministrationClient administrationClient;
 
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
             return userResponseResponseEntity.getBody();
 
         } catch (FeignException.FeignClientException e) {
-            LOG.error("User error: ", e);
+            log.error("User error: ", e);
             throw new ObjectNotFoundException(String.format("cannot not find user with sso: %s", userSso));
         }
     }

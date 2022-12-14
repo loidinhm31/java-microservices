@@ -11,12 +11,16 @@ public class ApiGatewayConfiguration {
     @Bean
     public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(r-> r.path("/handler-service/**")
+                .route(r-> r.path("/fsa/**")
+                        .filters(f -> f.rewritePath(
+                                "/administration-service/(?<path>.*)",
+                                "/$\\{path}"))
+                        .uri("lb://administration-service"))
+                .route(r-> r.path("/handler/**")
                         .filters(f -> f.rewritePath(
                                 "/handler-service/(?<path>.*)",
                                 "/$\\{path}"))
                         .uri("lb://handler-service"))
                 .build();
     }
-
 }
