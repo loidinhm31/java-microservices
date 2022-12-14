@@ -18,13 +18,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${spring.security.oauth2.resourceserver.opaque.introspection-uri}")
+    @Value("${spring.security.oauth2.resourceserver.opaque-token.introspection-uri}")
     String introspectionUri;
 
-    @Value("${spring.security.oauth2.resourceserver.opaque.introspection-client-id}")
+    @Value("${spring.security.oauth2.resourceserver.opaque-token.client-id}")
     String clientId;
 
-    @Value("${spring.security.oauth2.resourceserver.opaque.introspection-client-secret}")
+    @Value("${spring.security.oauth2.resourceserver.opaque-token.client-secret}")
     String clientSecret;
 
     private final CustomUserDetailsService customUserDetailsService;
@@ -68,7 +68,10 @@ public class SecurityConfig {
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .opaqueToken(opaqueToken -> opaqueToken
                                 .introspector(introspector())))
+                // Basic Authenticate
                 .authorizeHttpRequests()
+                .and()
+                .httpBasic()
         ;
         return http.build();
     }

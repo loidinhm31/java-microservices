@@ -29,6 +29,7 @@ public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntr
         this.delegate = new NimbusOpaqueTokenIntrospector(introspectionUri, clientId, clientSecret);
     }
 
+    @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
         OAuth2AuthenticatedPrincipal principal = this.delegate.introspect(token);
 
@@ -47,7 +48,7 @@ public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntr
         if (principal.getAttributes().containsKey("preferred_username")) {
             String userSso = principal.getAttributes().get("preferred_username").toString();
 
-            // TODO Double-check
+            // Double-check from administration client
             Pair<UserDto, Collection<? extends GrantedAuthority>> userPair = customUserDetailsService.loadUserBySso(userSso);
             return userPair;
         }

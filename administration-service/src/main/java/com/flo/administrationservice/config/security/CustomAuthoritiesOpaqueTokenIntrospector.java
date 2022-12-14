@@ -13,28 +13,34 @@ import org.springframework.security.oauth2.server.resource.introspection.NimbusO
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.RestOperations;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
-    private final Logger LOG = LoggerFactory.getLogger(CustomAuthoritiesOpaqueTokenIntrospector.class);
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final UserInfoService userInfoService;
 
     private OpaqueTokenIntrospector delegate;
+
+    private RestOperations restOperations;
 
     public CustomAuthoritiesOpaqueTokenIntrospector(UserInfoService userInfoService) {
         this.userInfoService = userInfoService;
     }
 
     public void setDelegate(String introspectionUri, String clientId, String clientSecret) {
-        System.out.println(introspectionUri);
         this.delegate = new NimbusOpaqueTokenIntrospector(introspectionUri, clientId, clientSecret);
     }
 
+    @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
         OAuth2AuthenticatedPrincipal principal = this.delegate.introspect(token);
 
@@ -45,7 +51,7 @@ public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntr
             username = principal.getName();
         }
         return new DefaultOAuth2AuthenticatedPrincipal(
-               username , principal.getAttributes(), extractAuthorities(principal));
+                username, principal.getAttributes(), extractAuthorities(principal));
     }
 
     private Collection<GrantedAuthority> extractAuthorities(OAuth2AuthenticatedPrincipal principal) {
@@ -66,8 +72,8 @@ public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntr
             } else {
                 grantedAuthorities = user.getAuthorities();
             }
-            LOG.info(String.format("sso: %s\n", user.getUsername()));
-            LOG.info(String.format("authorities: %s\n", grantedAuthorities));
+            logger.info(String.format("sso: %s\n", user.getUsername()));
+            logger.info(String.format("authorities: %s\n", grantedAuthorities));
         }
         return (Collection<GrantedAuthority>) grantedAuthorities;
     }
