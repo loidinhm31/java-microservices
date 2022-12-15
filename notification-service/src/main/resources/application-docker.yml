@@ -1,0 +1,25 @@
+spring:
+  mongodb:
+    uri: mongodb+srv://mongodb:mongodbpw@mongo:27017/webservice
+  rabbitmq:
+    addresses: localhost:5672
+
+# Eureka Client
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://eureka-discovery-server:8082/eureka}
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
+  instance:
+    preferIpAddress: true
+
+# RabbitMQ
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key

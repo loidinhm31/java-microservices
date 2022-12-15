@@ -1,0 +1,17 @@
+server:
+  port: 9095
+spring:
+  application:
+    name: notification-service
+  profiles:
+    active: local
+
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key
+
