@@ -5,11 +5,18 @@ import com.flo.administrationservice.dto.UserDto;
 import com.flo.administrationservice.dto.UserRoleDto;
 import com.flo.administrationservice.entity.User;
 import com.flo.administrationservice.exception.ObjectNotFoundException;
+import com.flo.administrationservice.model.SSOGenericRead;
+import com.flo.administrationservice.model.UserRequest;
 import com.flo.administrationservice.record.UserResponse;
 import com.flo.administrationservice.repository.UserRepository;
+import com.flo.administrationservice.service.UserOIDCService;
 import com.flo.administrationservice.service.UserService;
+import com.flo.administrationservice.utilities.SecurityUtils;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,8 +25,11 @@ import java.util.Objects;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    private final UserOIDCService userOIDCService;
+
+    public UserServiceImpl(UserRepository userRepository, UserOIDCService userOIDCService) {
         this.userRepository = userRepository;
+        this.userOIDCService = userOIDCService;
     }
 
 
@@ -66,5 +76,31 @@ public class UserServiceImpl implements UserService {
         );
         userDto.setUserRoles(userRoleDtos);
         return userDto;
+    }
+
+    @Override
+    public UserDto createUser(UserRequest userRequest) {
+        String authorSso = SecurityUtils.getSso();
+
+        SSOGenericRead ssoGenericRead = userOIDCService.getUserInfoOIDC(userRequest.getSso());
+
+        if (Objects.nonNull(ssoGenericRead)) {
+            User user = new User();
+            user.setSso(ssoGenericRead.getUsername());
+            user.setUsername(ssoGenericRead.getLastName() + " " + ssoGenericRead.getFirstName());
+            user.setEmail(ssoGenericRead.getEmail());
+            user.setCreatedBy(authorSso);
+            user.setUpdatedBy(authorSso);
+
+            User createdUser = userRepository.save(user);
+
+            UserDto userDto = new UserDto();
+            userDto.setUserId(createdUser.getUserId());
+            userDto.setSso(createdUser.getSso());
+            userDto.setUsername(createdUser.getUsername());
+            userDto.setEmail(createdUser.getEmail());
+            return userDto;
+        }
+        return null;
     }
 }

@@ -24,6 +24,9 @@ spring:
     baselineOnMigrate: true
     table: schema_history
 
+security:
+  host: http://keycloak-authorization-server:8081/auth/admin/realms/flo-dev
+
 # Eureka Client
 eureka:
   client:

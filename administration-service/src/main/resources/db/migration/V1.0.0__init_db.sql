@@ -6,7 +6,7 @@ search_path TO fsa;
 CREATE TABLE users
 (
     user_id    SERIAL    NOT NULL PRIMARY KEY NOT NULL,
-    sso        TEXT      NOT NULL,
+    sso        TEXT      NOT NULL UNIQUE,
     username   TEXT,
     email      TEXT,
     created_at TIMESTAMP NOT NULL,
