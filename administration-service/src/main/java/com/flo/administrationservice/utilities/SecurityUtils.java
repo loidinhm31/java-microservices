@@ -32,10 +32,4 @@ public class SecurityUtils {
         return authentication != null ? ((DefaultOAuth2AuthenticatedPrincipal) authentication.getPrincipal()).getName()
                 : StringUtils.EMPTY;
     }
-
-    public static UserDto getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null ? (UserDto) authentication.getPrincipal() : null;
-    }
-
 }
