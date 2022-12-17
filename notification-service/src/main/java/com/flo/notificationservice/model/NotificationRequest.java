@@ -13,7 +13,7 @@ public class NotificationRequest {
 
     private String subject;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'ZZZZZZ'")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'ZZZZZ'")
     private LocalDateTime triggerAt;
 
     public NotificationRequest() {
