@@ -1,4 +1,4 @@
-package com.flo.handlerservice.model;
+package com.flo.administrationservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -13,6 +13,8 @@ public class NotificationRequest {
 
     private String subject;
 
+    private String message;
+
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'ZZZZZ'")
     private LocalDateTime triggerAt;
 
@@ -20,11 +22,12 @@ public class NotificationRequest {
 
     }
 
-    public NotificationRequest(String sso, String fromAddress, String toAddress, String subject, LocalDateTime triggerAt) {
+    public NotificationRequest(String sso, String fromAddress, String toAddress, String subject, String message, LocalDateTime triggerAt) {
         this.sso = sso;
         this.fromAddress = fromAddress;
         this.toAddress = toAddress;
         this.subject = subject;
+        this.message = message;
         this.triggerAt = triggerAt;
     }
 
@@ -58,6 +61,14 @@ public class NotificationRequest {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public LocalDateTime getTriggerAt() {

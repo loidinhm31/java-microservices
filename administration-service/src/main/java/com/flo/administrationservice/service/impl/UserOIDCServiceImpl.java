@@ -8,7 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Objects;
 
 
 @Service
@@ -31,26 +34,28 @@ public class UserOIDCServiceImpl implements UserOIDCService {
             HttpEntity<?> request = new HttpEntity<>(httpHeaders);
 
             String url = userUrl + "/users?username=" + sso;
+            ResponseEntity<SSOGenericRead[]> responseEntity = null;
             try {
-                ResponseEntity<SSOGenericRead[]> responseEntity = restTemplate.exchange(
+                responseEntity = restTemplate.exchange(
                         url,
                         HttpMethod.GET,
                         request,
                         SSOGenericRead[].class
                 );
 
-                return responseEntity.getBody()[0];
+                return Objects.requireNonNull(responseEntity.getBody())[0];
             } catch (RuntimeException e) {
                 try {
-                    ResponseEntity<SSOGenericRead[]> responseEntity = restTemplate.exchange(
+                    responseEntity = restTemplate.exchange(
                             url,
                             HttpMethod.GET,
                             request,
                             SSOGenericRead[].class
                     );
-                    return responseEntity.getBody()[0];
+                    return Objects.requireNonNull(responseEntity.getBody())[0];
                 } catch (RuntimeException e2) {
                     log.error("unexpected error: ", e2);
+                    throw new HttpClientErrorException(Objects.requireNonNull(responseEntity).getStatusCode());
                 }
             }
         }

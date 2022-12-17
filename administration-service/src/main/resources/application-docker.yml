@@ -6,6 +6,8 @@ spring:
     password: postgrespw
   jpa:
     show-sql: true
+  rabbitmq:
+    addresses: rabbitmq:5672
 
   security:
     oauth2:

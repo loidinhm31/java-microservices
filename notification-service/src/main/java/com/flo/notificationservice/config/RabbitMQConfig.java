@@ -1,4 +1,4 @@
-package com.flo.handlerservice.config;
+package com.flo.notificationservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;

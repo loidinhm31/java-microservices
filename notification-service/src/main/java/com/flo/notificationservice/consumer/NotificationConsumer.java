@@ -1,6 +1,7 @@
 package com.flo.notificationservice.consumer;
 
 import com.flo.notificationservice.document.Notification;
+import com.flo.notificationservice.model.NotificationRequest;
 import com.flo.notificationservice.service.HistoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +21,17 @@ public class NotificationConsumer {
     }
 
     @RabbitListener(queues = "${rabbitmq.queues.notification}")
-    public void consumer(Notification notificationRequest) {
+    public void consumer(NotificationRequest notificationRequest) {
         log.info("Consumed payload from queue from sso {}", notificationRequest.getSso());
-        notificationRequest.setCreatedAt(LocalDateTime.now());
-        historyService.save(notificationRequest);
+
+        Notification notification = new Notification();
+        notification.setSso(notificationRequest.getSso());
+        notification.setSubject(notificationRequest.getSubject());
+        notification.setFromAddress(notificationRequest.getFromAddress());
+        notification.setToAddress(notificationRequest.getToAddress());
+        notification.setTriggerAt(notificationRequest.getTriggerAt());
+        notification.setCreatedAt(LocalDateTime.now());
+
+        historyService.save(notification);
     }
 }

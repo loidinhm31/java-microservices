@@ -5,59 +5,59 @@ search_path TO fsa;
 
 CREATE TABLE users
 (
-    user_id    SERIAL    NOT NULL PRIMARY KEY NOT NULL,
-    sso        TEXT      NOT NULL UNIQUE,
+    user_id    SERIAL                   NOT NULL PRIMARY KEY NOT NULL,
+    sso        TEXT                     NOT NULL UNIQUE,
     username   TEXT,
     email      TEXT,
-    created_at TIMESTAMP NOT NULL,
-    created_by TEXT      NOT NULL,
-    updated_at TIMESTAMP NOT NULL,
-    updated_by TEXT      NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_by TEXT                     NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_by TEXT                     NOT NULL
 );
 
 CREATE TABLE roles
 (
-    role_id    SERIAL PRIMARY KEY NOT NULL,
-    role_name  TEXT               NOT NULL,
-    role_code  TEXT               NOT NULL,
-    created_at TIMESTAMP          NOT NULL,
-    created_by TEXT               NOT NULL,
-    updated_at TIMESTAMP          NOT NULL,
-    updated_by TEXT               NOT NULL
+    role_id    SERIAL PRIMARY KEY       NOT NULL,
+    role_name  TEXT                     NOT NULL,
+    role_code  TEXT                     NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_by TEXT                     NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_by TEXT                     NOT NULL
 );
 
 CREATE TABLE user_role
 (
-    id         SERIAL PRIMARY KEY NOT NULL,
-    user_id    SERIAL             NOT NULL,
-    role_id    SERIAL             NOT NULL,
-    is_active  BOOLEAN            NOT NULL,
-    created_at TIMESTAMP          NOT NULL,
-    created_by TEXT               NOT NULL,
-    updated_at TIMESTAMP          NOT NULL,
-    updated_by TEXT               NOT NULL
+    id         SERIAL PRIMARY KEY       NOT NULL,
+    user_id    SERIAL                   NOT NULL,
+    role_id    SERIAL                   NOT NULL,
+    is_active  BOOLEAN                  NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_by TEXT                     NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_by TEXT                     NOT NULL
 );
 
 CREATE TABLE features
 (
-    feature_id   SERIAL PRIMARY KEY NOT NULL,
-    feature_name TEXT               NOT NULL,
-    feature_code TEXT               NOT NULL,
-    created_at   TIMESTAMP          NOT NULL,
-    created_by   TEXT               NOT NULL,
-    updated_at   TIMESTAMP          NOT NULL,
-    updated_by   TEXT               NOT NULL
+    feature_id   SERIAL PRIMARY KEY       NOT NULL,
+    feature_name TEXT                     NOT NULL,
+    feature_code TEXT                     NOT NULL,
+    created_at   TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_by   TEXT                     NOT NULL,
+    updated_at   TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_by   TEXT                     NOT NULL
 );
 
 CREATE TABLE role_feature
 (
-    id         SERIAL PRIMARY KEY NOT NULL,
-    role_id    SERIAL             NOT NULL,
-    feature_id SERIAL             NOT NULL,
-    created_at TIMESTAMP          NOT NULL,
-    created_by TEXT               NOT NULL,
-    updated_at TIMESTAMP          NOT NULL,
-    updated_by TEXT               NOT NULL
+    id         SERIAL PRIMARY KEY       NOT NULL,
+    role_id    SERIAL                   NOT NULL,
+    feature_id SERIAL                   NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_by TEXT                     NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_by TEXT                     NOT NULL
 );
 
 CREATE TABLE tracking_last_login
@@ -66,9 +66,9 @@ CREATE TABLE tracking_last_login
     user_id                SERIAL references users (user_id) NOT NULL,
     service_code           TEXT,
     last_login_time        TEXT                              NOT NULL,
-    created_at             TIMESTAMP                         NOT NULL,
+    created_at             TIMESTAMP WITH TIME ZONE          NOT NULL,
     created_by             TEXT                              NOT NULL,
-    updated_at             TIMESTAMP                         NOT NULL,
+    updated_at             TIMESTAMP WITH TIME ZONE          NOT NULL,
     updated_by             TEXT                              NOT NULL
 );
 CREATE INDEX IF NOT EXISTS tracking_last_login_user_id_index ON TRACKING_LAST_LOGIN (user_id);

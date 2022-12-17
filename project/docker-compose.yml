@@ -12,9 +12,21 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
+
+  mongo:
+    image: "mongo:6.0"
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: webservice
+      MONGO_INITDB_ROOT_USERNAME: mongodb
+      MONGO_INITDB_ROOT_PASSWORD: mongodbpw
+    volumes:
+      - /data/db:/data/db
+
   rabbitmq:
     container_name: rabbitmq
-    image: "rabbitmq:3.11-alpine"
+    image: "rabbitmq:3.11-management-alpine"
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -79,6 +91,19 @@ services:
     restart: always
     ports:
       - "9093:9093"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  notification-service:
+    build:
+      context: ./../notification-service
+      dockerfile: ./../notification-service/Dockerfile
+    restart: always
+    ports:
+      - "9095:9095"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     deploy:

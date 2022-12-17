@@ -1,8 +1,14 @@
 spring:
-  mongodb:
-    uri: mongodb+srv://mongodb:mongodbpw@mongo:27017/webservice
+  data:
+    mongodb:
+      authentication-database: admin
+      username: mongodb
+      password: mongodbpw
+      database: webservice
+      port: 27017
+      host: mongo
   rabbitmq:
-    addresses: localhost:5672
+    addresses: rabbitmq:5672
 
 # Eureka Client
 eureka:
