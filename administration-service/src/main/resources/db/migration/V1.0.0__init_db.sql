@@ -8,7 +8,7 @@ CREATE TABLE users
     user_id    SERIAL                   NOT NULL PRIMARY KEY NOT NULL,
     sso        TEXT                     NOT NULL UNIQUE,
     username   TEXT,
-    email      TEXT,
+    email      TEXT                     NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     created_by TEXT                     NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
