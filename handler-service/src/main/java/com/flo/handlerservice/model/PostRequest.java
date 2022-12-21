@@ -2,27 +2,25 @@ package com.flo.handlerservice.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PostRequest {
-    private long id;
+    private long postId;
 
     private String description;
 
-    @JsonProperty("user_id")
-    private long userId;
+    private String userSso;
 
     public PostRequest() {
 
     }
 
-    public long getId() {
-        return id;
+    public long getPostId() {
+        return postId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public String getDescription() {
@@ -33,11 +31,11 @@ public class PostRequest {
         this.description = description;
     }
 
-    public long getUserId() {
-        return userId;
+    public String getUserSso() {
+        return userSso;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserSso(String userSso) {
+        this.userSso = userSso;
     }
 }

@@ -8,49 +8,20 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class UserRequest extends BaseDto {
-    private Long id;
-
-    @Size(min = 2)
-    @JsonProperty("username")
-    private String name;
-
-
-    @Past(message = "birthdate should be in the past")
-    @JsonProperty("birth_date")
-    private LocalDate birthDate;
+    @Size(min = 9, max = 9)
+    @JsonProperty("sso")
+    private String sso;
 
    public UserRequest() {
 
    }
 
-    public UserRequest(Long id, String name, LocalDate birthDate) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
+    public String getSso() {
+        return sso;
     }
 
-    public Long getId() {
-        return id;
+    public void setSso(String sso) {
+        this.sso = sso;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
 }

@@ -1,31 +1,31 @@
 package com.flo.handlerservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "posts")
 public class Post extends BaseEntity<String> {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
+    private Long postId;
 
+    @Column(name = "description")
     private String description;
 
-    private String userSso;
+    @Column(name = "sso")
+    private String sso;
 
     public Post() {
 
     }
 
-    public Long getId() {
-        return id;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPostId(Long id) {
+        this.postId = id;
     }
 
     public String getDescription() {
@@ -36,11 +36,11 @@ public class Post extends BaseEntity<String> {
         this.description = description;
     }
 
-    public String getUserSso() {
-        return userSso;
+    public String getSso() {
+        return sso;
     }
 
-    public void setUserSso(String userSso) {
-        this.userSso = userSso;
+    public void setSso(String userSso) {
+        this.sso = userSso;
     }
 }

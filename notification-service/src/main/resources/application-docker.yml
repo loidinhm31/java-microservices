@@ -1,0 +1,31 @@
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      username: mongodb
+      password: mongodbpw
+      database: webservice
+      port: 27017
+      host: mongo
+  rabbitmq:
+    addresses: rabbitmq:5672
+
+# Eureka Client
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://eureka-discovery-server:8082/eureka}
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
+  instance:
+    preferIpAddress: true
+
+# RabbitMQ
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key

@@ -6,6 +6,8 @@ spring:
     password: postgrespw
   jpa:
     show-sql: true
+  rabbitmq:
+    addresses: rabbitmq:5672
 
   security:
     oauth2:
@@ -23,6 +25,9 @@ spring:
     baseline-version: 0
     baselineOnMigrate: true
     table: schema_history
+
+security:
+  host: http://keycloak-authorization-server:8081/auth/admin/realms/flo-dev
 
 # Eureka Client
 eureka:

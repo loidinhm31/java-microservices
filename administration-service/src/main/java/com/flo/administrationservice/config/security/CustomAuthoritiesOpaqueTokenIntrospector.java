@@ -15,16 +15,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestOperations;
 
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final UserInfoService userInfoService;
 
@@ -72,8 +69,8 @@ public class CustomAuthoritiesOpaqueTokenIntrospector implements OpaqueTokenIntr
             } else {
                 grantedAuthorities = user.getAuthorities();
             }
-            logger.info(String.format("sso: %s\n", user.getUsername()));
-            logger.info(String.format("authorities: %s\n", grantedAuthorities));
+            log.info(String.format("sso: %s\n", user.getUsername()));
+            log.info(String.format("authorities: %s\n", grantedAuthorities));
         }
         return (Collection<GrantedAuthority>) grantedAuthorities;
     }

@@ -1,13 +1,12 @@
 package com.flo.administrationservice.controller;
 
 import com.flo.administrationservice.dto.UserDto;
+import com.flo.administrationservice.model.UserRequest;
 import com.flo.administrationservice.record.UserResponse;
 import com.flo.administrationservice.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -30,4 +29,9 @@ public class UserController {
 
         return ResponseEntity.ok(userDto);
     }
-}
+
+    @PostMapping
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserRequest userRequest) {
+        UserDto savedUser = userService.createUser(userRequest);
+        return ResponseEntity.ok(savedUser);
+    }}

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
-    private final Logger LOG = LoggerFactory.getLogger(CustomUserDetailsServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final AdministrationClient administrationClient;
 
     public CustomUserDetailsServiceImpl(AdministrationClient administrationClient) {
@@ -34,7 +34,7 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
         try {
             userDto = administrationClient.retrieveRolesForUser(sso).getBody();
         } catch (Exception e) {
-            LOG.error("Security exception: ", e);
+            log.error("Security exception: ", e);
             throw new UserSecurityException(e.getMessage());
         }
 

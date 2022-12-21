@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/v1/resilience")
 public class ResilienceController {
-    private final Logger logger = LoggerFactory.getLogger(ResilienceController.class);
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
      * The retry pattern provides resiliency to a system by recovering from transient issues.
@@ -24,7 +24,7 @@ public class ResilienceController {
     @GetMapping("/retry-api")
     @Retry(name = "retryApi", fallbackMethod = "fallbackAfterRetry")
     public String retryApi() {
-        logger.info("Retry API call received");
+        log.info("Retry API call received");
         ResponseEntity<String> entity =
                 new RestTemplate().getForEntity("http://localhost:9090/dummy-api", String.class);
         return entity.getBody();
@@ -41,7 +41,7 @@ public class ResilienceController {
     @GetMapping("/circuit-breaker-api")
     @CircuitBreaker(name = "circuitBreakerApi")
     public String circuitBreakerApi() {
-        logger.info("Circuit Breaker API call received");
+        log.info("Circuit Breaker API call received");
         ResponseEntity<String> entity =
                 new RestTemplate().getForEntity("http://localhost:9090/dummy-api", String.class);
         return entity.getBody();
@@ -54,7 +54,7 @@ public class ResilienceController {
     @GetMapping("/bulkhead-api")
     @Bulkhead(name = "bulkheadApi")
     public String bulkheadApi() {
-        logger.info("Bulk Head API call received");
+        log.info("Bulk Head API call received");
         ResponseEntity<String> entity =
                 new RestTemplate().getForEntity("http://localhost:9090/dummy-api", String.class);
         return entity.getBody();
@@ -67,7 +67,7 @@ public class ResilienceController {
     @GetMapping("/rate-limiter-api")
     @RateLimiter(name = "rateLimiterApi")
     public String rateLimitApi() {
-        logger.info("Rate Limiter API call received");
+        log.info("Rate Limiter API call received");
         return "reached rate limiter api";
     }
 }

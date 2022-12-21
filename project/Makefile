@@ -5,7 +5,7 @@ up:
 	@echo "Docker images started!"
 
 ## up_build: stops docker-compose (if running), builds all projects and starts docker compose
-up_build: build_keycloak_sv build_api_gateway_sv build_eureka_sv build_fsa build_handler
+up_build: build_keycloak_sv build_api_gateway_sv build_eureka_sv build_fsa build_handler build_notification
 	@echo "Stopping docker images (if running...)"
 	docker-compose down
 	@echo "Building (when required) and starting docker images..."
@@ -46,4 +46,10 @@ build_fsa:
 build_handler:
 	@echo "Building handler jar..."
 	cd ../handler-service && mvn clean install -DskipTests
+	@echo "Done!"
+
+## build_notification: builds the notification jar as a linux executable
+build_notification:
+	@echo "Building notification jar..."
+	cd ../notification-service && mvn clean install -DskipTests
 	@echo "Done!"
