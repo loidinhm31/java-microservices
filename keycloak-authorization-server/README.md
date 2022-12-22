@@ -17,3 +17,9 @@ The token is invalid, because the issuer (iss) in the token does not match the i
 To fix this you can set the Frontend URL in your realm to http://localhost:<PORT>/auth. With this setting the issuer will no longer be determined in the request, but will be fixed http://localhost:<PORT>/auth/realms/<your-realm>.
 
 ![alt text](./images/img.png)
+
+## Dump postgresql for defined settings
+Backup
+````sh
+pg_dump --host=localhost --port=5432 --dbname=keycloak --username=postgres --password > keycloak.sql
+````
