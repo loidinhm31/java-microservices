@@ -23,3 +23,8 @@ Backup
 ````sh
 pg_dump --host=localhost --port=5432 --dbname=keycloak --username=postgres --password > keycloak.sql
 ````
+
+Restore
+````sh
+ psql --host=localhost --port=5432 --dbname=keycloak --username=postgres --password < keycloak.sql
+````
