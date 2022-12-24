@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
         value = "administration-service",
-        url = "http://administration-service:9091/api",
+        url = "${administration.endpoint}",
         configuration = AdministrationClientConfiguration.class
 )
 public interface AdministrationClient {
