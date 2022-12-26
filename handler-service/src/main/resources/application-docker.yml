@@ -1,15 +1,14 @@
 spring:
-    # Spring JDBC Properties
+  # Spring JDBC Properties
   datasource:
-    url: jdbc:h2:mem:testdb
-#    url: jdbc:postgresql://postgres:5432/postgres?currentSchema=handler
-#    username: postgres
-#    password: postgrespw
+    url: jdbc:postgresql://postgres:5432/postgres?currentSchema=webservice
+    username: postgres
+    password: postgrespw
 
   # Flyway config
   flyway:
     #    enabled: false
-    schemas:
+    schemas: webservice
     outOfOrder: true
     baseline-version: 0
     baselineOnMigrate: true
@@ -29,3 +28,8 @@ eureka:
       defaultZone: ${EUREKA_URI:http://eureka-discovery-server:8082/eureka}
   instance:
     preferIpAddress: true
+
+administration:
+  endpoint: http://administration-service:9091/api
+  username: sa-basic-secret
+  password: sa-basic-secret

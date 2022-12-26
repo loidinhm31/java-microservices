@@ -10,14 +10,6 @@ spring:
   rabbitmq:
     addresses: localhost:5672
 
-  security:
-    oauth2:
-      resource-server:
-        opaque-token:
-          introspection-uri: http://localhost:8081/auth/realms/flo-dev/protocol/openid-connect/token/introspect
-          client-id: FLO_API_SECRET
-          client-secret: ofBYMfWcT48VYenq8kh0jzdYegxxSPAZ
-
   # Flyway config
   flyway:
     #    enabled: false
@@ -26,6 +18,14 @@ spring:
     baseline-version: 0
     baselineOnMigrate: true
     table: schema_history
+
+  security:
+    oauth2:
+      resource-server:
+        opaque-token:
+          introspection-uri: http://localhost:8081/auth/realms/flo-dev/protocol/openid-connect/token/introspect
+          client-id: FLO_API_SECRET
+          client-secret: ofBYMfWcT48VYenq8kh0jzdYegxxSPAZ
 
 security:
   host: http://localhost:8081/auth/admin/realms/flo-dev
