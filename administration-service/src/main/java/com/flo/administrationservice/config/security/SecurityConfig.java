@@ -19,13 +19,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Value("${spring.security.oauth2.resourceserver.opaque-token.introspection-uri}")
-    String introspectionUri;
+    private String introspectionUri;
 
     @Value("${spring.security.oauth2.resourceserver.opaque-token.client-id}")
-    String clientId;
+    private String clientId;
 
     @Value("${spring.security.oauth2.resourceserver.opaque-token.client-secret}")
-    String clientSecret;
+    private String clientSecret;
 
     private final UserInfoService userInfoService;
 
