@@ -1,7 +1,8 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://${MONGO_USER}:${MONGO_PW}@${MONGO_DB}/webservice
+      uri: mongodb+srv://${MONGO_USER}:${MONGO_PW}@${MONGO_DB}/admin?replicaSet=rs0&authSource=admin
+      database: webservice
   #      auto-index-creation: true
   rabbitmq:
     addresses: localhost:5672
